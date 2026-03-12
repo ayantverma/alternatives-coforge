@@ -21,6 +21,7 @@ const pageTitles: Record<string, string> = {
   lifecycle: "Lifecycle Events",
   compliance: "Compliance & Surveillance",
   duediligence: "Due Diligence",
+  financialmodeling: "Financial Modeling & Risk Profiling",
   documents: "Documents & Data Room",
   suitability: "Suitability & Prospecting",
   subscriptions: "Subscription Management",
