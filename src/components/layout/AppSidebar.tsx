@@ -145,6 +145,7 @@ const navByPersona: Record<Persona, NavSection[]> = {
       items: [
         { id: "catalog", label: "Product Catalog", icon: ShoppingBag },
         { id: "duediligence", label: "Due Diligence", icon: FileSearch },
+        { id: "financialmodeling", label: "Financial Modeling", icon: TrendingUp },
         { id: "regulatory", label: "Regulatory & Tax", icon: Scale },
       ],
     },

@@ -10,6 +10,7 @@ import PortfolioExposure from "@/components/modules/PortfolioExposure";
 import LifecycleEvents from "@/components/modules/LifecycleEvents";
 import ComplianceSurveillance from "@/components/modules/ComplianceSurveillance";
 import DueDiligence from "@/components/modules/DueDiligence";
+import FinancialModeling from "@/components/modules/FinancialModeling";
 import DocumentsView from "@/components/modules/DocumentsView";
 import PlaceholderView from "@/components/modules/PlaceholderView";
 
@@ -20,6 +21,7 @@ const pageTitles: Record<string, string> = {
   lifecycle: "Lifecycle Events",
   compliance: "Compliance & Surveillance",
   duediligence: "Due Diligence",
+  financialmodeling: "Financial Modeling & Risk Profiling",
   documents: "Documents & Data Room",
   suitability: "Suitability & Prospecting",
   subscriptions: "Subscription Management",
@@ -56,6 +58,8 @@ const Index = () => {
         return <ComplianceSurveillance />;
       case "duediligence":
         return <DueDiligence />;
+      case "financialmodeling":
+        return <FinancialModeling />;
       case "documents":
         return <DocumentsView />;
       case "suitability":
