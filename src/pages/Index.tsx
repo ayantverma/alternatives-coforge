@@ -58,6 +58,8 @@ const Index = () => {
         return <ComplianceSurveillance />;
       case "duediligence":
         return <DueDiligence />;
+      case "financialmodeling":
+        return <FinancialModeling />;
       case "documents":
         return <DocumentsView />;
       case "suitability":
