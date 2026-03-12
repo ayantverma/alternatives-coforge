@@ -10,6 +10,7 @@ import PortfolioExposure from "@/components/modules/PortfolioExposure";
 import LifecycleEvents from "@/components/modules/LifecycleEvents";
 import ComplianceSurveillance from "@/components/modules/ComplianceSurveillance";
 import DueDiligence from "@/components/modules/DueDiligence";
+import FinancialModeling from "@/components/modules/FinancialModeling";
 import DocumentsView from "@/components/modules/DocumentsView";
 import PlaceholderView from "@/components/modules/PlaceholderView";
 
