@@ -196,10 +196,7 @@ const AppSidebar = ({ currentPage, onNavigate, persona, onPersonaChange }: AppSi
         <div className="px-3 py-3 border-b border-border">
           <Select value={persona} onValueChange={(v) => onPersonaChange(v as Persona)}>
             <SelectTrigger className="w-full">
-              <div className="flex items-center gap-2">
-                <PersonaIcon className="h-4 w-4" />
-                <SelectValue />
-              </div>
+              <SelectValue />
             </SelectTrigger>
             <SelectContent>
               {(Object.keys(personaLabels) as Persona[]).map((p) => {
