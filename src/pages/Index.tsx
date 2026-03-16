@@ -215,10 +215,7 @@ const Index = () => {
           {showPlatformSelect ? (
             <AdvisorPlatformSelect onSelect={handlePlatformSelect} />
           ) : showFiduciary ? (
-            <PlaceholderView
-              title="Fiduciary Intelligence Platform"
-              description="Comprehensive fiduciary analytics, client suitability scoring, regulatory compliance monitoring, and advisor performance insights — coming soon."
-            />
+            renderFiduciaryContent()
           ) : showIcapital ? (
             <PlaceholderView
               title="iCapital"
