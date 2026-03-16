@@ -14,6 +14,8 @@ import FinancialModeling from "@/components/modules/FinancialModeling";
 import DocumentsView from "@/components/modules/DocumentsView";
 import PlaceholderView from "@/components/modules/PlaceholderView";
 import AdvisorPlatformSelect from "@/components/dashboard/AdvisorPlatformSelect";
+import FiduciarySidebar from "@/components/dashboard/FiduciarySidebar";
+import FiduciaryDashboard from "@/components/dashboard/FiduciaryDashboard";
 import { cn } from "@/lib/utils";
 import { Landmark, BarChart3, Globe, ArrowLeft } from "lucide-react";
 
