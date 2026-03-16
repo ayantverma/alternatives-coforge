@@ -13,6 +13,10 @@ import DueDiligence from "@/components/modules/DueDiligence";
 import FinancialModeling from "@/components/modules/FinancialModeling";
 import DocumentsView from "@/components/modules/DocumentsView";
 import PlaceholderView from "@/components/modules/PlaceholderView";
+import { cn } from "@/lib/utils";
+import { Landmark, BarChart3 } from "lucide-react";
+
+type AdvisorTab = "fiduciary" | "alternatives";
 
 const pageTitles: Record<string, string> = {
   dashboard: "Dashboard",
@@ -35,6 +39,7 @@ const pageTitles: Record<string, string> = {
 const Index = () => {
   const [persona, setPersona] = useState<Persona>("advisor");
   const [currentPage, setCurrentPage] = useState("dashboard");
+  const [advisorTab, setAdvisorTab] = useState<AdvisorTab>("alternatives");
 
   const handleNavigate = (page: string) => {
     setCurrentPage(page);
@@ -43,10 +48,19 @@ const Index = () => {
   const handlePersonaChange = (p: Persona) => {
     setPersona(p);
     setCurrentPage("dashboard");
+    if (p === "advisor") {
+      setAdvisorTab("alternatives");
+    }
+  };
+
+  const handleAdvisorTabChange = (tab: AdvisorTab) => {
+    setAdvisorTab(tab);
+    if (tab === "alternatives") {
+      setCurrentPage("dashboard");
+    }
   };
 
   const renderContent = () => {
-    // Shared modules
     switch (currentPage) {
       case "catalog":
         return <ProductCatalog />;
@@ -91,18 +105,76 @@ const Index = () => {
     }
   };
 
+  const isAdvisor = persona === "advisor";
+  const showFiduciary = isAdvisor && advisorTab === "fiduciary";
+
   return (
     <div className="flex h-screen w-full overflow-hidden">
-      <AppSidebar
-        currentPage={currentPage}
-        onNavigate={handleNavigate}
-        persona={persona}
-        onPersonaChange={handlePersonaChange}
-      />
+      {/* Show sidebar only when not on Fiduciary tab */}
+      {!showFiduciary && (
+        <AppSidebar
+          currentPage={currentPage}
+          onNavigate={handleNavigate}
+          persona={persona}
+          onPersonaChange={handlePersonaChange}
+        />
+      )}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <AppTopBar title={pageTitles[currentPage] || "Dashboard"} persona={persona} />
+        {/* Advisor dual-tab bar */}
+        {isAdvisor && (
+          <div className="flex items-center border-b border-border bg-card px-0 flex-shrink-0">
+            {showFiduciary && (
+              <div className="flex items-center gap-2 px-5 border-r border-border h-full py-3">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg gradient-primary flex-shrink-0">
+                  <Landmark className="h-4 w-4 text-primary-foreground" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-display leading-tight">Alternatives Hub</span>
+                  <span className="text-[10px] text-muted-foreground leading-tight">Northern Trust</span>
+                </div>
+              </div>
+            )}
+            <button
+              onClick={() => handleAdvisorTabChange("fiduciary")}
+              className={cn(
+                "flex items-center gap-2 px-6 py-3.5 text-sm font-medium border-b-2 transition-colors",
+                advisorTab === "fiduciary"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/30"
+              )}
+            >
+              <Landmark className="h-4 w-4" />
+              Fiduciary Intelligence Platform
+            </button>
+            <button
+              onClick={() => handleAdvisorTabChange("alternatives")}
+              className={cn(
+                "flex items-center gap-2 px-6 py-3.5 text-sm font-medium border-b-2 transition-colors",
+                advisorTab === "alternatives"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/30"
+              )}
+            >
+              <BarChart3 className="h-4 w-4" />
+              Alternatives Hub
+            </button>
+          </div>
+        )}
+
+        <AppTopBar
+          title={showFiduciary ? "Fiduciary Intelligence Platform" : (pageTitles[currentPage] || "Dashboard")}
+          persona={persona}
+        />
+
         <main className="flex-1 overflow-y-auto p-6 bg-background">
-          {renderContent()}
+          {showFiduciary ? (
+            <PlaceholderView
+              title="Fiduciary Intelligence Platform"
+              description="Comprehensive fiduciary analytics, client suitability scoring, regulatory compliance monitoring, and advisor performance insights — coming soon."
+            />
+          ) : (
+            renderContent()
+          )}
         </main>
       </div>
     </div>
