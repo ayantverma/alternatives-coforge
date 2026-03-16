@@ -147,6 +147,9 @@ const Index = () => {
           onPersonaChange={handlePersonaChange}
         />
       )}
+      {showFiduciary && (
+        <FiduciarySidebar currentPage={fiduciaryPage} onNavigate={setFiduciaryPage} />
+      )}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Advisor platform tab bar (shown when inside a platform, not on select screen) */}
         {isAdvisor && !showPlatformSelect && (
