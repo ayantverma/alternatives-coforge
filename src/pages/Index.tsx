@@ -40,7 +40,7 @@ const pageTitles: Record<string, string> = {
 const Index = () => {
   const [persona, setPersona] = useState<Persona>("advisor");
   const [currentPage, setCurrentPage] = useState("dashboard");
-  const [advisorTab, setAdvisorTab] = useState<AdvisorTab>("alternatives");
+  const [advisorPlatform, setAdvisorPlatform] = useState<AdvisorPlatform>("select");
 
   const handleNavigate = (page: string) => {
     setCurrentPage(page);
@@ -50,15 +50,18 @@ const Index = () => {
     setPersona(p);
     setCurrentPage("dashboard");
     if (p === "advisor") {
-      setAdvisorTab("alternatives");
+      setAdvisorPlatform("select");
     }
   };
 
-  const handleAdvisorTabChange = (tab: AdvisorTab) => {
-    setAdvisorTab(tab);
-    if (tab === "alternatives") {
-      setCurrentPage("dashboard");
-    }
+  const handlePlatformSelect = (platform: "fiduciary" | "alternatives" | "icapital") => {
+    setAdvisorPlatform(platform);
+    setCurrentPage("dashboard");
+  };
+
+  const handleBackToHome = () => {
+    setAdvisorPlatform("select");
+    setCurrentPage("dashboard");
   };
 
   const renderContent = () => {
