@@ -111,11 +111,30 @@ const Index = () => {
     }
   };
 
+  const [fiduciaryPage, setFiduciaryPage] = useState("dashboard");
+
   const isAdvisor = persona === "advisor";
   const showPlatformSelect = isAdvisor && advisorPlatform === "select";
   const showFiduciary = isAdvisor && advisorPlatform === "fiduciary";
   const showIcapital = isAdvisor && advisorPlatform === "icapital";
   const showAlternatives = isAdvisor && advisorPlatform === "alternatives";
+
+  const renderFiduciaryContent = () => {
+    if (fiduciaryPage === "dashboard") return <FiduciaryDashboard />;
+    const titles: Record<string, string> = {
+      "meeting-intelligence": "Meeting Intelligence",
+      "attrition-risk": "Attrition Risk",
+      "document-validator": "Document Validator",
+      "life-events": "Life Events",
+      "cross-sell-signals": "Cross-Sell Signals",
+      "risk-drift-monitor": "Risk Drift Monitor",
+      "orchestration": "Orchestration",
+      "signal-bridge": "Signal Bridge",
+      "fiduciary-dashboard": "Fiduciary Dashboard",
+      "settings": "Settings",
+    };
+    return <PlaceholderView title={titles[fiduciaryPage] || fiduciaryPage} description={`${titles[fiduciaryPage] || fiduciaryPage} module — coming soon.`} />;
+  };
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
