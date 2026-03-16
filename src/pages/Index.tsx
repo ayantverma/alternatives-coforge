@@ -13,10 +13,11 @@ import DueDiligence from "@/components/modules/DueDiligence";
 import FinancialModeling from "@/components/modules/FinancialModeling";
 import DocumentsView from "@/components/modules/DocumentsView";
 import PlaceholderView from "@/components/modules/PlaceholderView";
+import AdvisorPlatformSelect from "@/components/dashboard/AdvisorPlatformSelect";
 import { cn } from "@/lib/utils";
-import { Landmark, BarChart3 } from "lucide-react";
+import { Landmark, BarChart3, Globe, ArrowLeft } from "lucide-react";
 
-type AdvisorTab = "fiduciary" | "alternatives";
+type AdvisorPlatform = "select" | "fiduciary" | "alternatives" | "icapital";
 
 const pageTitles: Record<string, string> = {
   dashboard: "Dashboard",
