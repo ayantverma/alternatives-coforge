@@ -14,6 +14,8 @@ import FinancialModeling from "@/components/modules/FinancialModeling";
 import DocumentsView from "@/components/modules/DocumentsView";
 import PlaceholderView from "@/components/modules/PlaceholderView";
 import AdvisorPlatformSelect from "@/components/dashboard/AdvisorPlatformSelect";
+import FiduciarySidebar from "@/components/dashboard/FiduciarySidebar";
+import FiduciaryDashboard from "@/components/dashboard/FiduciaryDashboard";
 import { cn } from "@/lib/utils";
 import { Landmark, BarChart3, Globe, ArrowLeft } from "lucide-react";
 
@@ -109,11 +111,30 @@ const Index = () => {
     }
   };
 
+  const [fiduciaryPage, setFiduciaryPage] = useState("dashboard");
+
   const isAdvisor = persona === "advisor";
   const showPlatformSelect = isAdvisor && advisorPlatform === "select";
   const showFiduciary = isAdvisor && advisorPlatform === "fiduciary";
   const showIcapital = isAdvisor && advisorPlatform === "icapital";
   const showAlternatives = isAdvisor && advisorPlatform === "alternatives";
+
+  const renderFiduciaryContent = () => {
+    if (fiduciaryPage === "dashboard") return <FiduciaryDashboard />;
+    const titles: Record<string, string> = {
+      "meeting-intelligence": "Meeting Intelligence",
+      "attrition-risk": "Attrition Risk",
+      "document-validator": "Document Validator",
+      "life-events": "Life Events",
+      "cross-sell-signals": "Cross-Sell Signals",
+      "risk-drift-monitor": "Risk Drift Monitor",
+      "orchestration": "Orchestration",
+      "signal-bridge": "Signal Bridge",
+      "fiduciary-dashboard": "Fiduciary Dashboard",
+      "settings": "Settings",
+    };
+    return <PlaceholderView title={titles[fiduciaryPage] || fiduciaryPage} description={`${titles[fiduciaryPage] || fiduciaryPage} module — coming soon.`} />;
+  };
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
@@ -125,6 +146,9 @@ const Index = () => {
           persona={persona}
           onPersonaChange={handlePersonaChange}
         />
+      )}
+      {showFiduciary && (
+        <FiduciarySidebar currentPage={fiduciaryPage} onNavigate={setFiduciaryPage} />
       )}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Advisor platform tab bar (shown when inside a platform, not on select screen) */}
@@ -191,10 +215,7 @@ const Index = () => {
           {showPlatformSelect ? (
             <AdvisorPlatformSelect onSelect={handlePlatformSelect} />
           ) : showFiduciary ? (
-            <PlaceholderView
-              title="Fiduciary Intelligence Platform"
-              description="Comprehensive fiduciary analytics, client suitability scoring, regulatory compliance monitoring, and advisor performance insights — coming soon."
-            />
+            renderFiduciaryContent()
           ) : showIcapital ? (
             <PlaceholderView
               title="iCapital"
