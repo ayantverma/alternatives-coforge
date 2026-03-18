@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "bunx vite",
-    "build": "bunx vite build",
-    "build:dev": "bunx vite build --mode development",
+    "dev": "npx vite@5.4.19",
+    "build": "npx vite@5.4.19 build",
+    "build:dev": "npx vite@5.4.19 build --mode development",
     "lint": "eslint .",
-    "preview": "bunx vite preview",
+    "preview": "npx vite@5.4.19 preview",
     "test": "vitest run",
     "test:watch": "vitest"
   },
