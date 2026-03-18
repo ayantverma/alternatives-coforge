@@ -16,6 +16,7 @@ import PlaceholderView from "@/components/modules/PlaceholderView";
 import AdvisorPlatformSelect from "@/components/dashboard/AdvisorPlatformSelect";
 import FiduciarySidebar from "@/components/dashboard/FiduciarySidebar";
 import FiduciaryDashboard from "@/components/dashboard/FiduciaryDashboard";
+import MeetingIntelligence from "@/components/modules/MeetingIntelligence";
 import { cn } from "@/lib/utils";
 import { Landmark, BarChart3, Globe, ArrowLeft } from "lucide-react";
 
@@ -121,8 +122,8 @@ const Index = () => {
 
   const renderFiduciaryContent = () => {
     if (fiduciaryPage === "dashboard") return <FiduciaryDashboard />;
+    if (fiduciaryPage === "meeting-intelligence") return <MeetingIntelligence onBack={() => setFiduciaryPage("dashboard")} />;
     const titles: Record<string, string> = {
-      "meeting-intelligence": "Meeting Intelligence",
       "attrition-risk": "Attrition Risk",
       "document-validator": "Document Validator",
       "life-events": "Life Events",

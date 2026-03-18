@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, TrendingDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { TrendingUp, TrendingDown, Sparkles, Activity, CalendarDays, AlertTriangle, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const statusBadges = [
@@ -45,6 +46,90 @@ const statusColors: Record<string, string> = {
   Active: "bg-primary/10 text-primary",
   Processing: "bg-[hsl(var(--chart-4))]/10 text-[hsl(var(--chart-4))]",
   Idle: "bg-muted text-muted-foreground",
+};
+
+interface ActivityEntry {
+  agent: string;
+  icon: typeof Activity;
+  mode: string;
+  severity: "warning" | "success" | "info";
+  title: string;
+  client: string;
+  reasoning: string;
+  timeAgo: string;
+  confidence: number;
+  confidenceLabel: string;
+  triggeredAgent?: string;
+}
+
+const liveActivities: ActivityEntry[] = [
+  {
+    agent: "Risk Drift",
+    icon: Activity,
+    mode: "AUTONOMOUS",
+    severity: "warning",
+    title: "Portfolio drift alert — 12 points above IPS target",
+    client: "Meridith Langston",
+    reasoning: "Equity concentration breach detected. Auto-flagged for advisor review per IPS guidelines.",
+    timeAgo: "24m ago",
+    confidence: 87,
+    confidenceLabel: "HIGH",
+  },
+  {
+    agent: "Life Events",
+    icon: CalendarDays,
+    mode: "AUTONOMOUS",
+    severity: "success",
+    title: "Detected IPO filing — generated cross-sell opportunity",
+    client: "Constance Whitmore-Bell",
+    reasoning: "S-1 filing confirmed via SEC database. Estimated equity value $8-12M. Routing to Cross-Sell Agent.",
+    timeAgo: "30m ago",
+    confidence: 91,
+    confidenceLabel: "VERY HIGH",
+    triggeredAgent: "Cross-Sell Agent",
+  },
+  {
+    agent: "Attrition Risk",
+    icon: AlertTriangle,
+    mode: "AUTONOMOUS",
+    severity: "warning",
+    title: "Competitor wealth manager contact detected",
+    client: "Meridith Langston",
+    reasoning: "LinkedIn activity and email metadata indicate outreach from competitor firm. Risk score elevated.",
+    timeAgo: "40m ago",
+    confidence: 88,
+    confidenceLabel: "HIGH",
+  },
+];
+
+interface ClientRow {
+  name: string;
+  tier: string;
+  advisor: string;
+  aum: string;
+  riskScore: number;
+  riskLevel: string;
+  trendUp: boolean;
+  primaryFactor: string;
+  lastContact: string;
+}
+
+const clientsRequiringAttention: ClientRow[] = [
+  { name: "Meridith Langston", tier: "Platinum", advisor: "Sarah Chen", aum: "$412M", riskScore: 71, riskLevel: "High", trendUp: true, primaryFactor: "Competitor wealth manager contact detected", lastContact: "2024-12-20" },
+  { name: "Dr. Marcus & Elena Voss", tier: "Platinum", advisor: "James Whitfield", aum: "$287M", riskScore: 68, riskLevel: "High", trendUp: true, primaryFactor: "Unresolved estate planning issues beyond SLA", lastContact: "2024-11-18" },
+  { name: "Constance Whitmore-Bell", tier: "Gold", advisor: "Sarah Chen", aum: "$156M", riskScore: 54, riskLevel: "Medium", trendUp: false, primaryFactor: "Portfolio underperformance vs benchmark", lastContact: "2025-01-05" },
+];
+
+const severityColors: Record<string, string> = {
+  warning: "text-[hsl(var(--chart-4))]",
+  success: "text-primary",
+  info: "text-muted-foreground",
+};
+
+const confidenceLabelColors: Record<string, string> = {
+  "VERY HIGH": "text-primary",
+  HIGH: "text-[hsl(var(--chart-4))]",
+  MEDIUM: "text-muted-foreground",
 };
 
 const FiduciaryDashboard = () => {
@@ -120,6 +205,128 @@ const FiduciaryDashboard = () => {
             </Card>
           ))}
         </div>
+      </div>
+
+      {/* Live Agent Activity */}
+      <div>
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+          Live Agent Activity
+        </p>
+        <Card className="border border-border">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-primary" />
+                <span className="text-sm font-semibold text-foreground">Live Agent Activity</span>
+                <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]">LIVE</Badge>
+              </div>
+              <span className="text-xs text-muted-foreground">{liveActivities.length} activities</span>
+            </div>
+
+            {/* Top reasoning bar */}
+            <div className="border-l-2 border-primary bg-primary/5 px-4 py-2 rounded-r mb-4">
+              <p className="text-xs text-foreground">
+                <span className="font-semibold">Agent Reasoning:</span> Detected estate planning concern with high confidence. ILIT review request clearly stated.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              {liveActivities.map((activity, idx) => {
+                const Icon = activity.icon;
+                return (
+                  <div key={idx} className="space-y-2">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-2">
+                        <Icon className={cn("h-5 w-5", severityColors[activity.severity])} />
+                        <span className="text-sm font-semibold text-foreground">{activity.agent}</span>
+                        <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]">AUTONOMOUS</Badge>
+                        {activity.severity === "warning" && <AlertTriangle className="h-3.5 w-3.5 text-[hsl(var(--chart-4))]" />}
+                        {activity.severity === "success" && (
+                          <svg className="h-3.5 w-3.5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+                        )}
+                      </div>
+                      <div className="text-right">
+                        <span className="text-xs text-muted-foreground">{activity.timeAgo}</span>
+                        <div className="flex items-center gap-1 justify-end mt-0.5">
+                          <span className={cn("text-sm font-semibold", confidenceLabelColors[activity.confidenceLabel])}>{activity.confidence}%</span>
+                          <span className={cn("text-[10px] font-semibold", confidenceLabelColors[activity.confidenceLabel])}>{activity.confidenceLabel}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-xs text-foreground ml-7">{activity.title}</p>
+                    <p className="text-xs text-muted-foreground ml-7">Client: {activity.client}</p>
+                    <div className="border-l-2 border-primary bg-primary/5 px-4 py-2 rounded-r ml-7">
+                      <p className="text-xs text-foreground">
+                        <span className="font-semibold">Agent Reasoning:</span> {activity.reasoning}
+                      </p>
+                    </div>
+                    {activity.triggeredAgent && (
+                      <p className="text-xs text-muted-foreground ml-7">→ Triggered {activity.triggeredAgent}</p>
+                    )}
+                    {idx < liveActivities.length - 1 && <div className="border-b border-border mt-4" />}
+                  </div>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Clients Requiring Attention */}
+      <div>
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+          Clients Requiring Attention
+        </p>
+        <Card className="border border-border overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="text-left py-3 px-4 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Client</th>
+                  <th className="text-left py-3 px-4 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">AUM</th>
+                  <th className="text-left py-3 px-4 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Risk Score</th>
+                  <th className="text-left py-3 px-4 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Trend</th>
+                  <th className="text-left py-3 px-4 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Primary Factor</th>
+                  <th className="text-left py-3 px-4 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Last Contact</th>
+                  <th className="text-left py-3 px-4 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {clientsRequiringAttention.map((client) => (
+                  <tr key={client.name} className="border-b border-border last:border-b-0">
+                    <td className="py-3 px-4">
+                      <p className="text-sm font-semibold text-foreground">{client.name}</p>
+                      <p className="text-muted-foreground">{client.tier} · {client.advisor}</p>
+                    </td>
+                    <td className="py-3 px-4 text-sm font-medium text-foreground">{client.aum}</td>
+                    <td className="py-3 px-4">
+                      <Badge variant="outline" className={cn(
+                        "text-[10px] font-semibold",
+                        client.riskLevel === "High" ? "bg-[hsl(var(--chart-4))]/10 text-[hsl(var(--chart-4))] border-[hsl(var(--chart-4))]/20" : "bg-muted text-muted-foreground"
+                      )}>
+                        {client.riskScore} {client.riskLevel}
+                      </Badge>
+                    </td>
+                    <td className="py-3 px-4">
+                      {client.trendUp ? (
+                        <TrendingUp className="h-4 w-4 text-destructive" />
+                      ) : (
+                        <TrendingDown className="h-4 w-4 text-primary" />
+                      )}
+                    </td>
+                    <td className="py-3 px-4 text-muted-foreground max-w-[250px]">{client.primaryFactor}</td>
+                    <td className="py-3 px-4 text-muted-foreground font-mono">{client.lastContact}</td>
+                    <td className="py-3 px-4">
+                      <Button variant="outline" size="sm" className="text-xs text-primary border-primary/30 hover:bg-primary/5 h-7 px-3">
+                        Review <ArrowRight className="h-3 w-3 ml-1" />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
       </div>
     </div>
   );
