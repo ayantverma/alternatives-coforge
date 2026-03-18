@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node ./node_modules/vite/dist/node/cli.js",
-    "build": "node ./node_modules/vite/dist/node/cli.js build",
-    "build:dev": "node ./node_modules/vite/dist/node/cli.js build --mode development",
+    "dev": "vite",
+    "build": "vite build",
+    "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "node ./node_modules/vite/dist/node/cli.js preview",
+    "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest"
   },
