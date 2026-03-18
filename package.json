@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "NODE_OPTIONS=--preserve-symlinks vite",
-    "build": "NODE_OPTIONS=--preserve-symlinks vite build",
-    "build:dev": "NODE_OPTIONS=--preserve-symlinks vite build --mode development",
+    "dev": "NODE_OPTIONS='--preserve-symlinks --preserve-symlinks-main' vite",
+    "build": "NODE_OPTIONS='--preserve-symlinks --preserve-symlinks-main' vite build",
+    "build:dev": "NODE_OPTIONS='--preserve-symlinks --preserve-symlinks-main' vite build --mode development",
     "lint": "eslint .",
-    "preview": "NODE_OPTIONS=--preserve-symlinks vite preview",
+    "preview": "NODE_OPTIONS='--preserve-symlinks --preserve-symlinks-main' vite preview",
     "test": "vitest run",
     "test:watch": "vitest"
   },
