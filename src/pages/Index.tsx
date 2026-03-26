@@ -214,7 +214,7 @@ const Index = () => {
 
         <main className="flex-1 overflow-y-auto p-6 bg-background">
           {showPlatformSelect ? (
-            <AdvisorPlatformSelect onSelect={handlePlatformSelect} onPersonaChange={handlePersonaChange} />
+            <AdvisorPlatformSelect onSelect={handlePlatformSelect} onPersonaChange={handlePersonaChange} currentPersona={persona} />
           ) : showFiduciary ? (
             renderFiduciaryContent()
           ) : showIcapital ? (
