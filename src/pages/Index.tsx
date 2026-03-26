@@ -219,10 +219,7 @@ const Index = () => {
           ) : showFiduciary ? (
             renderFiduciaryContent()
           ) : showIcapital ? (
-            <PlaceholderView
-              title="iCapital"
-              description="Alternative investment marketplace, fund subscription workflows, and technology-driven investment solutions — coming soon."
-            />
+            <ICapitalPlatform />
           ) : (
             renderContent()
           )}
