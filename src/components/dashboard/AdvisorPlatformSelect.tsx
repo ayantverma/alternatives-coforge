@@ -1,13 +1,21 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Landmark, Globe, Briefcase, TrendingUp, Eye } from "lucide-react";
+import { BarChart3, Landmark, Globe } from "lucide-react";
 import type { Persona } from "@/components/layout/AppSidebar";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type AdvisorPlatform = "fiduciary" | "alternatives" | "icapital";
 
 interface AdvisorPlatformSelectProps {
   onSelect: (platform: AdvisorPlatform) => void;
   onPersonaChange: (persona: Persona) => void;
+  currentPersona: Persona;
 }
 
 const platforms = [
