@@ -86,7 +86,7 @@ const Index = () => {
       case "documents":
         return <DocumentsView />;
       case "suitability":
-        return <PlaceholderView title="Suitability & Prospecting" description="Run suitability checks, concentration analysis, and client-product matching with fit scores." />;
+        return <SuitabilityProspecting />;
       case "subscriptions":
         return <PlaceholderView title="Subscription Management" description="Digital subscription packets, e-sign workflows, document checklists, and status tracking." />;
       case "clients":
