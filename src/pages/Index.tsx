@@ -13,6 +13,7 @@ import DueDiligence from "@/components/modules/DueDiligence";
 import FinancialModeling from "@/components/modules/FinancialModeling";
 import DocumentsView from "@/components/modules/DocumentsView";
 import PlaceholderView from "@/components/modules/PlaceholderView";
+import SuitabilityProspecting from "@/components/modules/SuitabilityProspecting";
 import AdvisorPlatformSelect from "@/components/dashboard/AdvisorPlatformSelect";
 import FiduciarySidebar from "@/components/dashboard/FiduciarySidebar";
 import FiduciaryDashboard from "@/components/dashboard/FiduciaryDashboard";
@@ -85,7 +86,7 @@ const Index = () => {
       case "documents":
         return <DocumentsView />;
       case "suitability":
-        return <PlaceholderView title="Suitability & Prospecting" description="Run suitability checks, concentration analysis, and client-product matching with fit scores." />;
+        return <SuitabilityProspecting />;
       case "subscriptions":
         return <PlaceholderView title="Subscription Management" description="Digital subscription packets, e-sign workflows, document checklists, and status tracking." />;
       case "clients":
