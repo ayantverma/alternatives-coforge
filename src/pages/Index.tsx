@@ -13,6 +13,7 @@ import DueDiligence from "@/components/modules/DueDiligence";
 import FinancialModeling from "@/components/modules/FinancialModeling";
 import DocumentsView from "@/components/modules/DocumentsView";
 import PlaceholderView from "@/components/modules/PlaceholderView";
+import SuitabilityProspecting from "@/components/modules/SuitabilityProspecting";
 import AdvisorPlatformSelect from "@/components/dashboard/AdvisorPlatformSelect";
 import FiduciarySidebar from "@/components/dashboard/FiduciarySidebar";
 import FiduciaryDashboard from "@/components/dashboard/FiduciaryDashboard";
