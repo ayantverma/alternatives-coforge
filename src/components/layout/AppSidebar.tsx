@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
-export type Persona = "uhni" | "advisor" | "pm" | "research";
+export type Persona = "advisor" | "investor-relations" | "pm" | "controller";
 
 interface AppSidebarProps {
   currentPage: string;
