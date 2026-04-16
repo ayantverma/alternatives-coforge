@@ -49,15 +49,6 @@ const platformsByPersona: Record<Persona, PlatformDef[]> = {
   advisor: [
     altsHubLauncher,
     {
-      id: "fiduciary",
-      title: "Fiduciary Platform",
-      subtitle: "AI-powered wealth management and client intelligence",
-      description: "Access dashboard, meeting intelligence, attrition risk monitoring, and more",
-      icon: Landmark,
-      gradient: "from-[hsl(220,60%,35%)] to-[hsl(220,80%,50%)]",
-      buttonLabel: "Enter Fiduciary Platform →",
-    },
-    {
       id: "icapital",
       title: "iCapital",
       subtitle: "Alternative investment marketplace and technology",
