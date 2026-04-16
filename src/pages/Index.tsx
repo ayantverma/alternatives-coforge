@@ -102,13 +102,13 @@ const Index = () => {
       case "dashboard":
       default:
         switch (persona) {
-          case "uhni":
-            return <UHNIDashboard />;
           case "advisor":
             return <AdvisorDashboard />;
+          case "investor-relations":
+            return <UHNIDashboard />;
           case "pm":
             return <PMDashboard />;
-          case "research":
+          case "controller":
             return <ResearchDashboard />;
         }
     }
