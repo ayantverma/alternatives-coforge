@@ -5,6 +5,9 @@ import PlaceholderView from "@/components/modules/PlaceholderView";
 import AdvisorPlatformSelect from "@/components/dashboard/AdvisorPlatformSelect";
 import FiduciarySidebar from "@/components/dashboard/FiduciarySidebar";
 import FiduciaryDashboard from "@/components/dashboard/FiduciaryDashboard";
+import InvestorRelationsDashboard from "@/components/dashboard/InvestorRelationsDashboard";
+import PortfolioManagerDashboard from "@/components/dashboard/PortfolioManagerDashboard";
+import ControllerDashboard from "@/components/dashboard/ControllerDashboard";
 import MeetingIntelligence from "@/components/modules/MeetingIntelligence";
 import ICapitalPlatform from "@/components/modules/ICapitalPlatform";
 import ProductCatalog from "@/components/modules/ProductCatalog";
@@ -49,9 +52,19 @@ const Index = () => {
   const showFiduciary = activePlatform === "fiduciary";
   const showIcapital = activePlatform === "icapital";
 
+  const getPersonaDashboard = () => {
+    switch (persona) {
+      case "advisor": return <FiduciaryDashboard />;
+      case "investor-relations": return <InvestorRelationsDashboard />;
+      case "pm": return <PortfolioManagerDashboard />;
+      case "controller": return <ControllerDashboard />;
+      default: return <FiduciaryDashboard />;
+    }
+  };
+
   const renderAltsHubContent = () => {
     switch (altsHubPage) {
-      case "dashboard": return <FiduciaryDashboard />;
+      case "dashboard": return getPersonaDashboard();
       case "catalog": return <ProductCatalog />;
       case "portfolio": return <PortfolioExposure />;
       case "duediligence": return <DueDiligence />;
