@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { type Persona } from "@/components/layout/AppSidebar";
+import AppSidebar, { type Persona } from "@/components/layout/AppSidebar";
 import AppTopBar from "@/components/layout/AppTopBar";
 import PlaceholderView from "@/components/modules/PlaceholderView";
 import AdvisorPlatformSelect from "@/components/dashboard/AdvisorPlatformSelect";
@@ -7,37 +7,24 @@ import FiduciarySidebar from "@/components/dashboard/FiduciarySidebar";
 import FiduciaryDashboard from "@/components/dashboard/FiduciaryDashboard";
 import MeetingIntelligence from "@/components/modules/MeetingIntelligence";
 import ICapitalPlatform from "@/components/modules/ICapitalPlatform";
+import ProductCatalog from "@/components/modules/ProductCatalog";
+import PortfolioExposure from "@/components/modules/PortfolioExposure";
+import DueDiligence from "@/components/modules/DueDiligence";
+import ComplianceSurveillance from "@/components/modules/ComplianceSurveillance";
+import LifecycleEvents from "@/components/modules/LifecycleEvents";
+import FinancialModeling from "@/components/modules/FinancialModeling";
+import DocumentsView from "@/components/modules/DocumentsView";
+import SuitabilityProspecting from "@/components/modules/SuitabilityProspecting";
 import { ArrowLeft } from "lucide-react";
 
 type ActivePlatform = "select" | "altshub" | "fiduciary" | "icapital" | string;
-
-const pageTitles: Record<string, string> = {
-  dashboard: "Dashboard",
-  catalog: "Product Catalog",
-  portfolio: "Portfolio & Exposure",
-  lifecycle: "Lifecycle Events",
-  compliance: "Compliance & Surveillance",
-  duediligence: "Due Diligence",
-  financialmodeling: "Financial Modeling & Risk Profiling",
-  documents: "Documents & Data Room",
-  suitability: "Suitability & Prospecting",
-  subscriptions: "Subscription Management",
-  clients: "Clients",
-  models: "Model Portfolios",
-  watchlist: "Watchlist & Ratings",
-  regulatory: "Regulatory & Tax",
-  settings: "Settings",
-};
 
 const Index = () => {
   const [persona, setPersona] = useState<Persona>("advisor");
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [activePlatform, setActivePlatform] = useState<ActivePlatform>("select");
   const [fiduciaryPage, setFiduciaryPage] = useState("dashboard");
-
-  const handleNavigate = (page: string) => {
-    setCurrentPage(page);
-  };
+  const [altsHubPage, setAltsHubPage] = useState("dashboard");
 
   const handlePersonaChange = (p: Persona) => {
     setPersona(p);
@@ -49,6 +36,7 @@ const Index = () => {
     setActivePlatform(platform);
     setCurrentPage("dashboard");
     if (platform === "fiduciary") setFiduciaryPage("dashboard");
+    if (platform === "altshub") setAltsHubPage("dashboard");
   };
 
   const handleBackToHome = () => {
@@ -61,23 +49,20 @@ const Index = () => {
   const showFiduciary = activePlatform === "fiduciary";
   const showIcapital = activePlatform === "icapital";
 
-  const [altsHubPage, setAltsHubPage] = useState("dashboard");
-
   const renderAltsHubContent = () => {
-    if (altsHubPage === "dashboard") return <FiduciaryDashboard />;
-    if (altsHubPage === "meeting-intelligence") return <MeetingIntelligence onBack={() => setAltsHubPage("dashboard")} />;
-    const titles: Record<string, string> = {
-      "attrition-risk": "Attrition Risk",
-      "document-validator": "Document Validator",
-      "life-events": "Life Events",
-      "cross-sell-signals": "Cross-Sell Signals",
-      "risk-drift-monitor": "Risk Drift Monitor",
-      "orchestration": "Orchestration",
-      "signal-bridge": "Signal Bridge",
-      "fiduciary-dashboard": "Fiduciary Dashboard",
-      "settings": "Settings",
-    };
-    return <PlaceholderView title={titles[altsHubPage] || altsHubPage} description={`${titles[altsHubPage] || altsHubPage} module — coming soon.`} />;
+    switch (altsHubPage) {
+      case "dashboard": return <FiduciaryDashboard />;
+      case "catalog": return <ProductCatalog />;
+      case "portfolio": return <PortfolioExposure />;
+      case "duediligence": return <DueDiligence />;
+      case "compliance": return <ComplianceSurveillance />;
+      case "lifecycle": return <LifecycleEvents />;
+      case "financialmodeling": return <FinancialModeling />;
+      case "documents": return <DocumentsView />;
+      case "suitability": return <SuitabilityProspecting />;
+      default:
+        return <PlaceholderView title={altsHubPage} description={`${altsHubPage} module — coming soon.`} />;
+    }
   };
 
   const renderFiduciaryContent = () => {
@@ -106,9 +91,14 @@ const Index = () => {
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
-      {/* ALT's Hub sidebar — mirrors fiduciary */}
+      {/* ALT's Hub uses the Alternatives sidebar */}
       {showAltsHub && (
-        <FiduciarySidebar currentPage={altsHubPage} onNavigate={setAltsHubPage} />
+        <AppSidebar
+          currentPage={altsHubPage}
+          onNavigate={setAltsHubPage}
+          persona={persona}
+          onPersonaChange={handlePersonaChange}
+        />
       )}
       {/* Fiduciary sidebar */}
       {showFiduciary && (
@@ -116,7 +106,6 @@ const Index = () => {
       )}
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Back bar when inside any platform */}
         {!showPlatformSelect && (
           <div className="flex items-center border-b border-border bg-card px-0 flex-shrink-0">
             <button
