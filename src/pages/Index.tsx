@@ -52,9 +52,19 @@ const Index = () => {
   const showFiduciary = activePlatform === "fiduciary";
   const showIcapital = activePlatform === "icapital";
 
+  const getPersonaDashboard = () => {
+    switch (persona) {
+      case "advisor": return <FiduciaryDashboard />;
+      case "investor-relations": return <InvestorRelationsDashboard />;
+      case "pm": return <PortfolioManagerDashboard />;
+      case "controller": return <ControllerDashboard />;
+      default: return <FiduciaryDashboard />;
+    }
+  };
+
   const renderAltsHubContent = () => {
     switch (altsHubPage) {
-      case "dashboard": return <FiduciaryDashboard />;
+      case "dashboard": return getPersonaDashboard();
       case "catalog": return <ProductCatalog />;
       case "portfolio": return <PortfolioExposure />;
       case "duediligence": return <DueDiligence />;
