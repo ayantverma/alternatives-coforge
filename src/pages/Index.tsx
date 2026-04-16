@@ -96,15 +96,15 @@ const Index = () => {
   };
 
   const getPlatformTitle = () => {
-    if (showAltsHub) return "ALT's Hub";
-    if (showFiduciary) return "Fiduciary Intelligence Platform";
+    if (showAltsHub) return "Alternatives Hub";
+    if (showFiduciary) return "Alternatives Intelligence Platform";
     if (showIcapital) return "iCapital";
     return activePlatform;
   };
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
-      {/* ALT's Hub uses the Alternatives sidebar */}
+      {/* Alternatives Hub uses the Alternatives sidebar */}
       {showAltsHub && (
         <AppSidebar
           currentPage={altsHubPage}

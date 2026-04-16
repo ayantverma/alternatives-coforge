@@ -54,7 +54,7 @@ const FiduciarySidebar = ({ currentPage, onNavigate }: FiduciarySidebarProps) =>
               <Landmark className="h-4 w-4 text-primary-foreground" />
             </div>
             <div className="flex flex-col">
-              <span className="text-xs font-display leading-tight">Fiduciary Intelligence</span>
+              <span className="text-xs font-display leading-tight">Alternatives Intelligence</span>
               <span className="text-[10px] text-muted-foreground leading-tight">Platform</span>
             </div>
           </div>

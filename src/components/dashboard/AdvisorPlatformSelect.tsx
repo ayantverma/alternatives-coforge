@@ -37,12 +37,12 @@ const personaOptions = [
 
 const altsHubLauncher: PlatformDef = {
   id: "altshub",
-  title: "ALT's Hub",
+  title: "Alternatives Hub",
   subtitle: "Centralized alternatives investment platform",
   description: "Product catalog, portfolio exposure, due diligence, compliance, lifecycle events, and more",
   icon: Layers,
   gradient: "from-ntgreen to-ntgreen-light",
-  buttonLabel: "Enter ALT's Hub →",
+  buttonLabel: "Enter Alternatives Hub →",
 };
 
 const platformsByPersona: Record<Persona, PlatformDef[]> = {
@@ -183,7 +183,7 @@ const AdvisorPlatformSelect = ({ onSelect, onPersonaChange, currentPersona }: Ad
   return (
     <div className="flex flex-col items-center justify-start min-h-[70vh] animate-fade-in px-6 py-8">
       <div className="flex items-center gap-4 mb-8 w-full max-w-5xl">
-        <h1 className="text-2xl font-display text-foreground">Fiduciary Intelligence Platform</h1>
+        <h1 className="text-2xl font-display text-foreground">Alternatives Intelligence Platform</h1>
         <Select value={currentPersona} onValueChange={(v) => onPersonaChange(v as Persona)}>
           <SelectTrigger className="w-[320px]">
             <SelectValue />
