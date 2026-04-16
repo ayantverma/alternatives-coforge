@@ -20,9 +20,9 @@ import FiduciaryDashboard from "@/components/dashboard/FiduciaryDashboard";
 import MeetingIntelligence from "@/components/modules/MeetingIntelligence";
 import ICapitalPlatform from "@/components/modules/ICapitalPlatform";
 import { cn } from "@/lib/utils";
-import { Landmark, BarChart3, Globe, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
-type AdvisorPlatform = "select" | "fiduciary" | "alternatives" | "icapital";
+type ActivePlatform = "select" | "altshub" | "fiduciary" | "icapital" | string;
 
 const pageTitles: Record<string, string> = {
   dashboard: "Dashboard",
@@ -45,7 +45,8 @@ const pageTitles: Record<string, string> = {
 const Index = () => {
   const [persona, setPersona] = useState<Persona>("advisor");
   const [currentPage, setCurrentPage] = useState("dashboard");
-  const [advisorPlatform, setAdvisorPlatform] = useState<AdvisorPlatform>("select");
+  const [activePlatform, setActivePlatform] = useState<ActivePlatform>("select");
+  const [fiduciaryPage, setFiduciaryPage] = useState("dashboard");
 
   const handleNavigate = (page: string) => {
     setCurrentPage(page);
@@ -54,73 +55,51 @@ const Index = () => {
   const handlePersonaChange = (p: Persona) => {
     setPersona(p);
     setCurrentPage("dashboard");
-    if (p === "advisor") {
-      setAdvisorPlatform("select");
-    }
+    setActivePlatform("select");
   };
 
-  const handlePlatformSelect = (platform: "fiduciary" | "alternatives" | "icapital") => {
-    setAdvisorPlatform(platform);
+  const handlePlatformSelect = (platform: string) => {
+    setActivePlatform(platform);
     setCurrentPage("dashboard");
+    if (platform === "fiduciary") setFiduciaryPage("dashboard");
   };
 
   const handleBackToHome = () => {
-    setAdvisorPlatform("select");
+    setActivePlatform("select");
     setCurrentPage("dashboard");
   };
 
-  const renderContent = () => {
+  const showPlatformSelect = activePlatform === "select";
+  const showAltsHub = activePlatform === "altshub";
+  const showFiduciary = activePlatform === "fiduciary";
+  const showIcapital = activePlatform === "icapital";
+
+  const renderAltsHubContent = () => {
     switch (currentPage) {
-      case "catalog":
-        return <ProductCatalog />;
-      case "portfolio":
-        return <PortfolioExposure />;
-      case "lifecycle":
-        return <LifecycleEvents />;
-      case "compliance":
-        return <ComplianceSurveillance />;
-      case "duediligence":
-        return <DueDiligence />;
-      case "financialmodeling":
-        return <FinancialModeling />;
-      case "documents":
-        return <DocumentsView />;
-      case "suitability":
-        return <SuitabilityProspecting />;
-      case "subscriptions":
-        return <PlaceholderView title="Subscription Management" description="Digital subscription packets, e-sign workflows, document checklists, and status tracking." />;
-      case "clients":
-        return <PlaceholderView title="Client Management" description="View client profiles, KYC status, accreditation, and alternative investment allocations." />;
-      case "models":
-        return <PlaceholderView title="Model Portfolios" description="Create and manage alt sleeves, set guardrails, monitor drift, and approve product lists." />;
-      case "watchlist":
-        return <PlaceholderView title="Watchlist & Ratings" description="Internal fund ratings, peer comparisons, and approved/watch/restricted list management." />;
-      case "regulatory":
-        return <PlaceholderView title="Regulatory & Tax" description="K-1 distribution tracking, SEC filings, ERISA compliance, UBTI analysis, and tax optimization views." />;
-      case "settings":
-        return <PlaceholderView title="Settings" description="Role-based access control, entitlements, workflow configuration, and integration management." />;
+      case "catalog": return <ProductCatalog />;
+      case "portfolio": return <PortfolioExposure />;
+      case "lifecycle": return <LifecycleEvents />;
+      case "compliance": return <ComplianceSurveillance />;
+      case "duediligence": return <DueDiligence />;
+      case "financialmodeling": return <FinancialModeling />;
+      case "documents": return <DocumentsView />;
+      case "suitability": return <SuitabilityProspecting />;
+      case "subscriptions": return <PlaceholderView title="Subscription Management" description="Digital subscription packets, e-sign workflows, document checklists, and status tracking." />;
+      case "clients": return <PlaceholderView title="Client Management" description="View client profiles, KYC status, accreditation, and alternative investment allocations." />;
+      case "models": return <PlaceholderView title="Model Portfolios" description="Create and manage alt sleeves, set guardrails, monitor drift, and approve product lists." />;
+      case "watchlist": return <PlaceholderView title="Watchlist & Ratings" description="Internal fund ratings, peer comparisons, and approved/watch/restricted list management." />;
+      case "regulatory": return <PlaceholderView title="Regulatory & Tax" description="K-1 distribution tracking, SEC filings, ERISA compliance, UBTI analysis, and tax optimization views." />;
+      case "settings": return <PlaceholderView title="Settings" description="Role-based access control, entitlements, workflow configuration, and integration management." />;
       case "dashboard":
       default:
         switch (persona) {
-          case "advisor":
-            return <AdvisorDashboard />;
-          case "investor-relations":
-            return <UHNIDashboard />;
-          case "pm":
-            return <PMDashboard />;
-          case "controller":
-            return <ResearchDashboard />;
+          case "advisor": return <AdvisorDashboard />;
+          case "investor-relations": return <UHNIDashboard />;
+          case "pm": return <PMDashboard />;
+          case "controller": return <ResearchDashboard />;
         }
     }
   };
-
-  const [fiduciaryPage, setFiduciaryPage] = useState("dashboard");
-
-  const isAdvisor = persona === "advisor";
-  const showPlatformSelect = isAdvisor && advisorPlatform === "select";
-  const showFiduciary = isAdvisor && advisorPlatform === "fiduciary";
-  const showIcapital = isAdvisor && advisorPlatform === "icapital";
-  const showAlternatives = isAdvisor && advisorPlatform === "alternatives";
 
   const renderFiduciaryContent = () => {
     if (fiduciaryPage === "dashboard") return <FiduciaryDashboard />;
@@ -139,10 +118,17 @@ const Index = () => {
     return <PlaceholderView title={titles[fiduciaryPage] || fiduciaryPage} description={`${titles[fiduciaryPage] || fiduciaryPage} module — coming soon.`} />;
   };
 
+  const getPlatformTitle = () => {
+    if (showAltsHub) return pageTitles[currentPage] || "Dashboard";
+    if (showFiduciary) return "Fiduciary Intelligence Platform";
+    if (showIcapital) return "iCapital";
+    return activePlatform; // fallback for other launchers
+  };
+
   return (
     <div className="flex h-screen w-full overflow-hidden">
-      {/* Show sidebar only for non-advisor or alternatives platform */}
-      {(!isAdvisor || showAlternatives) && (
+      {/* ALT's Hub sidebar */}
+      {showAltsHub && (
         <AppSidebar
           currentPage={currentPage}
           onNavigate={handleNavigate}
@@ -150,66 +136,28 @@ const Index = () => {
           onPersonaChange={handlePersonaChange}
         />
       )}
+      {/* Fiduciary sidebar */}
       {showFiduciary && (
         <FiduciarySidebar currentPage={fiduciaryPage} onNavigate={setFiduciaryPage} />
       )}
+
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Advisor platform tab bar (shown when inside a platform, not on select screen) */}
-        {isAdvisor && !showPlatformSelect && (
+        {/* Back bar when inside any platform */}
+        {!showPlatformSelect && (
           <div className="flex items-center border-b border-border bg-card px-0 flex-shrink-0">
             <button
               onClick={handleBackToHome}
-              className="flex items-center gap-1.5 px-4 py-3.5 text-sm text-muted-foreground hover:text-foreground transition-colors border-r border-border"
+              className="flex items-center gap-1.5 px-4 py-3.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to Home
-            </button>
-            <button
-              onClick={() => handlePlatformSelect("fiduciary")}
-              className={cn(
-                "flex items-center gap-2 px-6 py-3.5 text-sm font-medium border-b-2 transition-colors",
-                showFiduciary
-                  ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/30"
-              )}
-            >
-              <Landmark className="h-4 w-4" />
-              Fiduciary Platform
-            </button>
-            <button
-              onClick={() => handlePlatformSelect("alternatives")}
-              className={cn(
-                "flex items-center gap-2 px-6 py-3.5 text-sm font-medium border-b-2 transition-colors",
-                showAlternatives
-                  ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/30"
-              )}
-            >
-              <BarChart3 className="h-4 w-4" />
-              Alternatives Hub
-            </button>
-            <button
-              onClick={() => handlePlatformSelect("icapital")}
-              className={cn(
-                "flex items-center gap-2 px-6 py-3.5 text-sm font-medium border-b-2 transition-colors",
-                showIcapital
-                  ? "border-primary text-primary"
-                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/30"
-              )}
-            >
-              <Globe className="h-4 w-4" />
-              iCapital
             </button>
           </div>
         )}
 
         {!showPlatformSelect && (
           <AppTopBar
-            title={
-              showFiduciary ? "Fiduciary Intelligence Platform" 
-              : showIcapital ? "iCapital"
-              : (pageTitles[currentPage] || "Dashboard")
-            }
+            title={getPlatformTitle()}
             persona={persona}
           />
         )}
@@ -217,12 +165,14 @@ const Index = () => {
         <main className="flex-1 overflow-y-auto p-6 bg-background">
           {showPlatformSelect ? (
             <AdvisorPlatformSelect onSelect={handlePlatformSelect} onPersonaChange={handlePersonaChange} currentPersona={persona} />
+          ) : showAltsHub ? (
+            renderAltsHubContent()
           ) : showFiduciary ? (
             renderFiduciaryContent()
           ) : showIcapital ? (
             <ICapitalPlatform />
           ) : (
-            renderContent()
+            <PlaceholderView title={activePlatform} description={`${activePlatform} platform — coming soon.`} />
           )}
         </main>
       </div>
