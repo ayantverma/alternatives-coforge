@@ -1,25 +1,12 @@
 import { useState } from "react";
-import AppSidebar, { type Persona } from "@/components/layout/AppSidebar";
+import { type Persona } from "@/components/layout/AppSidebar";
 import AppTopBar from "@/components/layout/AppTopBar";
-import UHNIDashboard from "@/components/dashboard/UHNIDashboard";
-import AdvisorDashboard from "@/components/dashboard/AdvisorDashboard";
-import PMDashboard from "@/components/dashboard/PMDashboard";
-import ResearchDashboard from "@/components/dashboard/ResearchDashboard";
-import ProductCatalog from "@/components/modules/ProductCatalog";
-import PortfolioExposure from "@/components/modules/PortfolioExposure";
-import LifecycleEvents from "@/components/modules/LifecycleEvents";
-import ComplianceSurveillance from "@/components/modules/ComplianceSurveillance";
-import DueDiligence from "@/components/modules/DueDiligence";
-import FinancialModeling from "@/components/modules/FinancialModeling";
-import DocumentsView from "@/components/modules/DocumentsView";
 import PlaceholderView from "@/components/modules/PlaceholderView";
-import SuitabilityProspecting from "@/components/modules/SuitabilityProspecting";
 import AdvisorPlatformSelect from "@/components/dashboard/AdvisorPlatformSelect";
 import FiduciarySidebar from "@/components/dashboard/FiduciarySidebar";
 import FiduciaryDashboard from "@/components/dashboard/FiduciaryDashboard";
 import MeetingIntelligence from "@/components/modules/MeetingIntelligence";
 import ICapitalPlatform from "@/components/modules/ICapitalPlatform";
-import { cn } from "@/lib/utils";
 import { ArrowLeft } from "lucide-react";
 
 type ActivePlatform = "select" | "altshub" | "fiduciary" | "icapital" | string;
