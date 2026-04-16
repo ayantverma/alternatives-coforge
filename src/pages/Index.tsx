@@ -111,22 +111,17 @@ const Index = () => {
   };
 
   const getPlatformTitle = () => {
-    if (showAltsHub) return pageTitles[currentPage] || "Dashboard";
+    if (showAltsHub) return "ALT's Hub";
     if (showFiduciary) return "Fiduciary Intelligence Platform";
     if (showIcapital) return "iCapital";
-    return activePlatform; // fallback for other launchers
+    return activePlatform;
   };
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
-      {/* ALT's Hub sidebar */}
+      {/* ALT's Hub sidebar — mirrors fiduciary */}
       {showAltsHub && (
-        <AppSidebar
-          currentPage={currentPage}
-          onNavigate={handleNavigate}
-          persona={persona}
-          onPersonaChange={handlePersonaChange}
-        />
+        <FiduciarySidebar currentPage={altsHubPage} onNavigate={setAltsHubPage} />
       )}
       {/* Fiduciary sidebar */}
       {showFiduciary && (
