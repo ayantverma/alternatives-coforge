@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Globe, Landmark, BarChart3, Building2, Wallet, Database, ShieldCheck, TrendingUp, Briefcase, Receipt, DollarSign } from "lucide-react";
+import { Globe, Landmark, BarChart3, Building2, Wallet, Database, ShieldCheck, TrendingUp, Briefcase, Receipt, DollarSign, Layers } from "lucide-react";
 import type { Persona } from "@/components/layout/AppSidebar";
 import {
   Select,
@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-type AdvisorPlatform = "fiduciary" | "alternatives" | "icapital" | string;
+type AdvisorPlatform = "fiduciary" | "altshub" | "icapital" | string;
 
 interface PlatformDef {
   id: string;
@@ -35,15 +35,26 @@ const personaOptions = [
   { id: "controller" as Persona, label: "Finance & Operations - Controller" },
 ];
 
+const altsHubLauncher: PlatformDef = {
+  id: "altshub",
+  title: "ALT's Hub",
+  subtitle: "Centralized alternatives investment platform",
+  description: "Product catalog, portfolio exposure, due diligence, compliance, lifecycle events, and more",
+  icon: Layers,
+  gradient: "from-ntgreen to-ntgreen-light",
+  buttonLabel: "Enter ALT's Hub →",
+};
+
 const platformsByPersona: Record<Persona, PlatformDef[]> = {
   advisor: [
+    altsHubLauncher,
     {
       id: "fiduciary",
       title: "Fiduciary Platform",
       subtitle: "AI-powered wealth management and client intelligence",
       description: "Access dashboard, meeting intelligence, attrition risk monitoring, and more",
       icon: Landmark,
-      gradient: "from-ntgreen to-ntgreen-light",
+      gradient: "from-[hsl(220,60%,35%)] to-[hsl(220,80%,50%)]",
       buttonLabel: "Enter Fiduciary Platform →",
     },
     {
@@ -75,6 +86,7 @@ const platformsByPersona: Record<Persona, PlatformDef[]> = {
     },
   ],
   "investor-relations": [
+    altsHubLauncher,
     {
       id: "backstop-ir",
       title: "Backstop",
@@ -86,6 +98,7 @@ const platformsByPersona: Record<Persona, PlatformDef[]> = {
     },
   ],
   pm: [
+    altsHubLauncher,
     {
       id: "backstop-pm",
       title: "Backstop",
@@ -124,6 +137,7 @@ const platformsByPersona: Record<Persona, PlatformDef[]> = {
     },
   ],
   controller: [
+    altsHubLauncher,
     {
       id: "alter-domus",
       title: "Alter Domus",
