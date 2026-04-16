@@ -8,10 +8,10 @@ interface AppTopBarProps {
 }
 
 const personaTitles: Record<Persona, string> = {
-  uhni: "Investor Portal",
   advisor: "Wealth Advisor",
+  "investor-relations": "Investor Relations",
   pm: "Portfolio Manager",
-  research: "Alt Research Desk",
+  controller: "Controller",
 };
 
 const AppTopBar = ({ title, persona }: AppTopBarProps) => {

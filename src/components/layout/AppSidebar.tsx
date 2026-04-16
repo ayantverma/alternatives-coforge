@@ -39,17 +39,17 @@ interface AppSidebarProps {
 }
 
 const personaLabels: Record<Persona, string> = {
-  uhni: "UHNI / Investor",
-  advisor: "Wealth Advisor",
-  pm: "Portfolio Manager",
-  research: "Alt Research Analyst",
+  advisor: "Distribution & Sales - Wealth Advisor",
+  "investor-relations": "Investor Management - Investor Relations",
+  pm: "Investment Management - Portfolio Manager",
+  controller: "Finance & Operations - Controller",
 };
 
 const personaIcons: Record<Persona, React.ComponentType<any>> = {
-  uhni: Landmark,
   advisor: Briefcase,
+  "investor-relations": Users,
   pm: TrendingUp,
-  research: BarChart3,
+  controller: BarChart3,
 };
 
 interface NavSection {
@@ -58,29 +58,6 @@ interface NavSection {
 }
 
 const navByPersona: Record<Persona, NavSection[]> = {
-  uhni: [
-    {
-      label: "Overview",
-      items: [
-        { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-        { id: "portfolio", label: "Portfolio & Exposure", icon: PieChart },
-      ],
-    },
-    {
-      label: "Investments",
-      items: [
-        { id: "catalog", label: "Product Catalog", icon: ShoppingBag },
-        { id: "lifecycle", label: "Lifecycle Events", icon: ClipboardList },
-        { id: "documents", label: "Documents", icon: FolderOpen },
-      ],
-    },
-    {
-      label: "Account",
-      items: [
-        { id: "settings", label: "Settings", icon: Settings },
-      ],
-    },
-  ],
   advisor: [
     {
       label: "Overview",
@@ -103,6 +80,29 @@ const navByPersona: Record<Persona, NavSection[]> = {
       items: [
         { id: "lifecycle", label: "Lifecycle Events", icon: ClipboardList },
         { id: "documents", label: "Documents", icon: FolderOpen },
+        { id: "settings", label: "Settings", icon: Settings },
+      ],
+    },
+  ],
+  "investor-relations": [
+    {
+      label: "Overview",
+      items: [
+        { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+        { id: "clients", label: "Investors", icon: Users },
+      ],
+    },
+    {
+      label: "Investor Relations",
+      items: [
+        { id: "portfolio", label: "Portfolio & Exposure", icon: PieChart },
+        { id: "lifecycle", label: "Capital Activity", icon: ClipboardList },
+        { id: "documents", label: "Reporting & Documents", icon: FolderOpen },
+      ],
+    },
+    {
+      label: "Account",
+      items: [
         { id: "settings", label: "Settings", icon: Settings },
       ],
     },
@@ -132,28 +132,26 @@ const navByPersona: Record<Persona, NavSection[]> = {
       ],
     },
   ],
-  research: [
+  controller: [
     {
       label: "Overview",
       items: [
         { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
-        { id: "watchlist", label: "Watchlist & Ratings", icon: Eye },
       ],
     },
     {
-      label: "Research",
+      label: "Finance",
       items: [
-        { id: "catalog", label: "Product Catalog", icon: ShoppingBag },
-        { id: "duediligence", label: "Due Diligence", icon: FileSearch },
-        { id: "financialmodeling", label: "Financial Modeling", icon: TrendingUp },
-        { id: "regulatory", label: "Regulatory & Tax", icon: Scale },
+        { id: "portfolio", label: "Fund Accounting", icon: PieChart },
+        { id: "compliance", label: "Compliance", icon: AlertTriangle },
+        { id: "lifecycle", label: "Cash & Liquidity", icon: ClipboardList },
       ],
     },
     {
       label: "Operations",
       items: [
-        { id: "compliance", label: "Compliance", icon: AlertTriangle },
         { id: "documents", label: "Documents", icon: FolderOpen },
+        { id: "regulatory", label: "Regulatory & Tax", icon: Scale },
         { id: "settings", label: "Settings", icon: Settings },
       ],
     },
