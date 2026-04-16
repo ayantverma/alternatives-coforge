@@ -1,25 +1,12 @@
 import { useState } from "react";
-import AppSidebar, { type Persona } from "@/components/layout/AppSidebar";
+import { type Persona } from "@/components/layout/AppSidebar";
 import AppTopBar from "@/components/layout/AppTopBar";
-import UHNIDashboard from "@/components/dashboard/UHNIDashboard";
-import AdvisorDashboard from "@/components/dashboard/AdvisorDashboard";
-import PMDashboard from "@/components/dashboard/PMDashboard";
-import ResearchDashboard from "@/components/dashboard/ResearchDashboard";
-import ProductCatalog from "@/components/modules/ProductCatalog";
-import PortfolioExposure from "@/components/modules/PortfolioExposure";
-import LifecycleEvents from "@/components/modules/LifecycleEvents";
-import ComplianceSurveillance from "@/components/modules/ComplianceSurveillance";
-import DueDiligence from "@/components/modules/DueDiligence";
-import FinancialModeling from "@/components/modules/FinancialModeling";
-import DocumentsView from "@/components/modules/DocumentsView";
 import PlaceholderView from "@/components/modules/PlaceholderView";
-import SuitabilityProspecting from "@/components/modules/SuitabilityProspecting";
 import AdvisorPlatformSelect from "@/components/dashboard/AdvisorPlatformSelect";
 import FiduciarySidebar from "@/components/dashboard/FiduciarySidebar";
 import FiduciaryDashboard from "@/components/dashboard/FiduciaryDashboard";
 import MeetingIntelligence from "@/components/modules/MeetingIntelligence";
 import ICapitalPlatform from "@/components/modules/ICapitalPlatform";
-import { cn } from "@/lib/utils";
 import { ArrowLeft } from "lucide-react";
 
 type ActivePlatform = "select" | "altshub" | "fiduciary" | "icapital" | string;
@@ -74,31 +61,23 @@ const Index = () => {
   const showFiduciary = activePlatform === "fiduciary";
   const showIcapital = activePlatform === "icapital";
 
+  const [altsHubPage, setAltsHubPage] = useState("dashboard");
+
   const renderAltsHubContent = () => {
-    switch (currentPage) {
-      case "catalog": return <ProductCatalog />;
-      case "portfolio": return <PortfolioExposure />;
-      case "lifecycle": return <LifecycleEvents />;
-      case "compliance": return <ComplianceSurveillance />;
-      case "duediligence": return <DueDiligence />;
-      case "financialmodeling": return <FinancialModeling />;
-      case "documents": return <DocumentsView />;
-      case "suitability": return <SuitabilityProspecting />;
-      case "subscriptions": return <PlaceholderView title="Subscription Management" description="Digital subscription packets, e-sign workflows, document checklists, and status tracking." />;
-      case "clients": return <PlaceholderView title="Client Management" description="View client profiles, KYC status, accreditation, and alternative investment allocations." />;
-      case "models": return <PlaceholderView title="Model Portfolios" description="Create and manage alt sleeves, set guardrails, monitor drift, and approve product lists." />;
-      case "watchlist": return <PlaceholderView title="Watchlist & Ratings" description="Internal fund ratings, peer comparisons, and approved/watch/restricted list management." />;
-      case "regulatory": return <PlaceholderView title="Regulatory & Tax" description="K-1 distribution tracking, SEC filings, ERISA compliance, UBTI analysis, and tax optimization views." />;
-      case "settings": return <PlaceholderView title="Settings" description="Role-based access control, entitlements, workflow configuration, and integration management." />;
-      case "dashboard":
-      default:
-        switch (persona) {
-          case "advisor": return <AdvisorDashboard />;
-          case "investor-relations": return <UHNIDashboard />;
-          case "pm": return <PMDashboard />;
-          case "controller": return <ResearchDashboard />;
-        }
-    }
+    if (altsHubPage === "dashboard") return <FiduciaryDashboard />;
+    if (altsHubPage === "meeting-intelligence") return <MeetingIntelligence onBack={() => setAltsHubPage("dashboard")} />;
+    const titles: Record<string, string> = {
+      "attrition-risk": "Attrition Risk",
+      "document-validator": "Document Validator",
+      "life-events": "Life Events",
+      "cross-sell-signals": "Cross-Sell Signals",
+      "risk-drift-monitor": "Risk Drift Monitor",
+      "orchestration": "Orchestration",
+      "signal-bridge": "Signal Bridge",
+      "fiduciary-dashboard": "Fiduciary Dashboard",
+      "settings": "Settings",
+    };
+    return <PlaceholderView title={titles[altsHubPage] || altsHubPage} description={`${titles[altsHubPage] || altsHubPage} module — coming soon.`} />;
   };
 
   const renderFiduciaryContent = () => {
@@ -119,22 +98,17 @@ const Index = () => {
   };
 
   const getPlatformTitle = () => {
-    if (showAltsHub) return pageTitles[currentPage] || "Dashboard";
+    if (showAltsHub) return "ALT's Hub";
     if (showFiduciary) return "Fiduciary Intelligence Platform";
     if (showIcapital) return "iCapital";
-    return activePlatform; // fallback for other launchers
+    return activePlatform;
   };
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
-      {/* ALT's Hub sidebar */}
+      {/* ALT's Hub sidebar — mirrors fiduciary */}
       {showAltsHub && (
-        <AppSidebar
-          currentPage={currentPage}
-          onNavigate={handleNavigate}
-          persona={persona}
-          onPersonaChange={handlePersonaChange}
-        />
+        <FiduciarySidebar currentPage={altsHubPage} onNavigate={setAltsHubPage} />
       )}
       {/* Fiduciary sidebar */}
       {showFiduciary && (
