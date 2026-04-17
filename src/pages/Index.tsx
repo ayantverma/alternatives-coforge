@@ -32,7 +32,16 @@ const Index = () => {
   const handlePersonaChange = (p: Persona) => {
     setPersona(p);
     setCurrentPage("dashboard");
-    setActivePlatform("select");
+    // If user is inside a platform, keep them in it and land on its dashboard
+    if (activePlatform === "altshub") {
+      setAltsHubPage("dashboard");
+    } else if (activePlatform === "fiduciary") {
+      setFiduciaryPage("dashboard");
+    } else if (activePlatform !== "select") {
+      // stay in current platform
+    } else {
+      setActivePlatform("select");
+    }
   };
 
   const handlePlatformSelect = (platform: string) => {
