@@ -121,6 +121,7 @@ const navByPersona: Record<Persona, NavSection[]> = {
         { id: "catalog", label: "Product Catalog", icon: ShoppingBag },
         { id: "portfolio", label: "Exposure & Risk", icon: PieChart },
         { id: "compliance", label: "Compliance & Surveillance", icon: AlertTriangle },
+        { id: "financialmodeling", label: "Financial Modeling", icon: BarChart3 },
       ],
     },
     {
@@ -145,6 +146,7 @@ const navByPersona: Record<Persona, NavSection[]> = {
         { id: "portfolio", label: "Fund Accounting", icon: PieChart },
         { id: "compliance", label: "Compliance", icon: AlertTriangle },
         { id: "lifecycle", label: "Cash & Liquidity", icon: ClipboardList },
+        { id: "financialmodeling", label: "Financial Modeling", icon: BarChart3 },
       ],
     },
     {
