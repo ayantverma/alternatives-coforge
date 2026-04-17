@@ -1,10 +1,32 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, TrendingDown, Users, DollarSign, FileText, Mail, Phone, ArrowRight, AlertTriangle, BarChart3, Calendar } from "lucide-react";
+import { TrendingUp, TrendingDown, Users, DollarSign, FileText, Mail, Phone, ArrowRight, AlertTriangle, BarChart3, Calendar, Sparkles } from "lucide-react";
+
+interface AgentCard {
+  name: string;
+  description: string;
+  status: "Active" | "Processing" | "Idle";
+  todayCount: number;
+  confidence: string;
+  lastRun: string;
+}
+
+const agents: AgentCard[] = [
+  { name: "LP Communications Agent", description: "Drafts personalized investor updates, capital call notices, and quarterly letters from fund data.", status: "Active", todayCount: 5, confidence: "92%", lastRun: "18 min ago" },
+  { name: "Capital Activity Tracker", description: "Monitors capital calls and distributions across funds, flags timing risks and reconciliation gaps.", status: "Active", todayCount: 3, confidence: "94%", lastRun: "42 min ago" },
+  { name: "Investor Sentiment Monitor", description: "Analyzes LP communications and meeting transcripts to detect satisfaction shifts and concerns.", status: "Processing", todayCount: 2, confidence: "87%", lastRun: "Now" },
+];
+
+const agentStatusColors: Record<string, string> = {
+  Active: "bg-primary/10 text-primary",
+  Processing: "bg-[hsl(var(--chart-4))]/10 text-[hsl(var(--chart-4))]",
+  Idle: "bg-muted text-muted-foreground",
+};
 import { cn } from "@/lib/utils";
 
 const statusBadges = [
+  { label: "3 Agents Active", color: "bg-primary/10 text-primary border-primary/20" },
   { label: "42 Active LPs", color: "bg-primary/10 text-primary border-primary/20" },
   { label: "6 Capital Calls Pending", color: "bg-[hsl(var(--chart-4))]/10 text-[hsl(var(--chart-4))] border-[hsl(var(--chart-4))]/20" },
   { label: "12 Reports Due", color: "bg-destructive/10 text-destructive border-destructive/20" },
@@ -141,6 +163,36 @@ const InvestorRelationsDashboard = () => {
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      {/* Active Agents */}
+      <div>
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+          Active Agents
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {agents.map((agent) => (
+            <Card key={agent.name} className="border border-border">
+              <CardContent className="p-4 space-y-3">
+                <div className="flex items-start justify-between">
+                  <h3 className="text-sm font-semibold text-foreground leading-tight">{agent.name}</h3>
+                  <Badge variant="outline" className={cn("text-[10px] ml-2 flex-shrink-0", agentStatusColors[agent.status])}>
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-current mr-1" />
+                    {agent.status}
+                  </Badge>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">{agent.description}</p>
+                <div className="flex items-center justify-between text-[11px] text-muted-foreground pt-1 border-t border-border">
+                  <div className="flex gap-4">
+                    <span><strong className="text-foreground">{agent.todayCount}</strong> today</span>
+                    <span><strong className="text-foreground">{agent.confidence}</strong> confidence</span>
+                  </div>
+                  <span>Last run: <strong className="text-foreground">{agent.lastRun}</strong></span>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
 
       {/* Top Investors Table */}

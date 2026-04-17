@@ -4,7 +4,30 @@ import { Button } from "@/components/ui/button";
 import { TrendingUp, TrendingDown, ArrowRight, AlertTriangle, BarChart3, Target, Activity, Layers, PieChart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+interface AgentCard {
+  name: string;
+  description: string;
+  status: "Active" | "Processing" | "Idle";
+  todayCount: number;
+  confidence: string;
+  lastRun: string;
+}
+
+const agents: AgentCard[] = [
+  { name: "Deal Screening Agent", description: "Auto-screens deal flow against IC criteria, prioritizes opportunities, and drafts initial memos.", status: "Active", todayCount: 6, confidence: "90%", lastRun: "22 min ago" },
+  { name: "Portfolio Risk Monitor", description: "Continuously monitors concentration, leverage, and covenant breaches across all positions.", status: "Active", todayCount: 4, confidence: "93%", lastRun: "8 min ago" },
+  { name: "Valuation Analyst", description: "Cross-checks portfolio mark-to-market estimates with comparable transactions and market data.", status: "Processing", todayCount: 2, confidence: "86%", lastRun: "Now" },
+  { name: "Financial Model Validator", description: "Validates financial modeling assumptions and stress-tests projections against historical data.", status: "Active", todayCount: 3, confidence: "91%", lastRun: "1 hr ago" },
+];
+
+const agentStatusColors: Record<string, string> = {
+  Active: "bg-primary/10 text-primary",
+  Processing: "bg-[hsl(var(--chart-4))]/10 text-[hsl(var(--chart-4))]",
+  Idle: "bg-muted text-muted-foreground",
+};
+
 const statusBadges = [
+  { label: "4 Agents Active", color: "bg-primary/10 text-primary border-primary/20" },
   { label: "14 Active Positions", color: "bg-primary/10 text-primary border-primary/20" },
   { label: "3 Deals in Pipeline", color: "bg-[hsl(var(--chart-4))]/10 text-[hsl(var(--chart-4))] border-[hsl(var(--chart-4))]/20" },
   { label: "2 Concentration Alerts", color: "bg-destructive/10 text-destructive border-destructive/20" },
@@ -127,6 +150,36 @@ const PortfolioManagerDashboard = () => {
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      {/* Active Agents */}
+      <div>
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+          Active Agents
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+          {agents.map((agent) => (
+            <Card key={agent.name} className="border border-border">
+              <CardContent className="p-4 space-y-3">
+                <div className="flex items-start justify-between">
+                  <h3 className="text-sm font-semibold text-foreground leading-tight">{agent.name}</h3>
+                  <Badge variant="outline" className={cn("text-[10px] ml-2 flex-shrink-0", agentStatusColors[agent.status])}>
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-current mr-1" />
+                    {agent.status}
+                  </Badge>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">{agent.description}</p>
+                <div className="flex items-center justify-between text-[11px] text-muted-foreground pt-1 border-t border-border">
+                  <div className="flex gap-3">
+                    <span><strong className="text-foreground">{agent.todayCount}</strong> today</span>
+                    <span><strong className="text-foreground">{agent.confidence}</strong></span>
+                  </div>
+                  <span><strong className="text-foreground">{agent.lastRun}</strong></span>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
 
       {/* Portfolio Holdings */}
