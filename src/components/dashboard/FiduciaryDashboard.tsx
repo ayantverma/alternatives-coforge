@@ -145,7 +145,7 @@ const FiduciaryDashboard = () => {
       {/* Header */}
       <div>
         <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-1">
-          Alternatives Intelligence Platform
+          Alternatives Strategic Platform
         </p>
         <h1 className="text-2xl font-display text-foreground">Advisor Dashboard</h1>
         <p className="text-xs text-muted-foreground">{today}</p>

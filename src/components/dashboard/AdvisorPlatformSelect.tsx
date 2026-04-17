@@ -58,22 +58,13 @@ const platformsByPersona: Record<Persona, PlatformDef[]> = {
       buttonLabel: "Enter iCapital →",
     },
     {
-      id: "subscribe",
-      title: "Subscribe",
-      subtitle: "Subscription management and workflows",
-      description: "Digital subscription packets, e-sign workflows, document checklists, and status tracking",
+      id: "subscribe-plus",
+      title: "Subscribe+",
+      subtitle: "Unified subscription and distribution platform",
+      description: "Digital subscription packets, e-sign workflows, document checklists, analytics, automation, and distribution insights",
       icon: Receipt,
       gradient: "from-[hsl(200,60%,35%)] to-[hsl(200,80%,50%)]",
-      buttonLabel: "Enter Subscribe →",
-    },
-    {
-      id: "subscribe-plus",
-      title: "Subscribe++",
-      subtitle: "Enhanced subscription and distribution tools",
-      description: "Advanced subscription management with analytics, automation, and distribution insights",
-      icon: TrendingUp,
-      gradient: "from-[hsl(170,50%,35%)] to-[hsl(170,70%,45%)]",
-      buttonLabel: "Enter Subscribe++ →",
+      buttonLabel: "Enter Subscribe+ →",
     },
   ],
   "investor-relations": [
@@ -86,6 +77,24 @@ const platformsByPersona: Record<Persona, PlatformDef[]> = {
       icon: Briefcase,
       gradient: "from-[hsl(220,60%,35%)] to-[hsl(220,80%,50%)]",
       buttonLabel: "Enter Backstop →",
+    },
+    {
+      id: "subscribe-plus",
+      title: "Subscribe+",
+      subtitle: "Unified subscription and distribution platform",
+      description: "Digital subscription packets, e-sign workflows, document checklists, analytics, automation, and distribution insights",
+      icon: Receipt,
+      gradient: "from-[hsl(200,60%,35%)] to-[hsl(200,80%,50%)]",
+      buttonLabel: "Enter Subscribe+ →",
+    },
+    {
+      id: "icapital",
+      title: "iCapital",
+      subtitle: "Alternative investment marketplace and technology",
+      description: "Access iCapital's platform for alternative investment solutions and fund management",
+      icon: Globe,
+      gradient: "from-[hsl(250,60%,40%)] to-[hsl(250,80%,55%)]",
+      buttonLabel: "Enter iCapital →",
     },
   ],
   pm: [
@@ -183,7 +192,7 @@ const AdvisorPlatformSelect = ({ onSelect, onPersonaChange, currentPersona }: Ad
   return (
     <div className="flex flex-col items-center justify-start min-h-[70vh] animate-fade-in px-6 py-8">
       <div className="flex items-center gap-4 mb-8 w-full max-w-5xl">
-        <h1 className="text-2xl font-display text-foreground">Alternatives Intelligence Platform</h1>
+        <h1 className="text-2xl font-display text-foreground">Alternatives Strategic Platform</h1>
         <Select value={currentPersona} onValueChange={(v) => onPersonaChange(v as Persona)}>
           <SelectTrigger className="w-[320px]">
             <SelectValue />
