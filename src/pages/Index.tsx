@@ -97,7 +97,7 @@ const Index = () => {
 
   const getPlatformTitle = () => {
     if (showAltsHub) return "Alternatives Hub";
-    if (showFiduciary) return "Alternatives Intelligence Platform";
+    if (showFiduciary) return "Alternatives Strategic Platform";
     if (showIcapital) return "iCapital";
     return activePlatform;
   };
