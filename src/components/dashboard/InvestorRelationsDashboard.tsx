@@ -13,7 +13,7 @@ interface AgentCard {
 }
 
 const agents: AgentCard[] = [
-  { name: "LP Communications Agent", description: "Drafts personalized investor updates, capital call notices, and quarterly letters from fund data.", status: "Active", todayCount: 5, confidence: "92%", lastRun: "18 min ago" },
+  { name: "Investor Communications Agent", description: "Drafts personalized investor updates, capital call notices, and quarterly letters from fund data.", status: "Active", todayCount: 5, confidence: "92%", lastRun: "18 min ago" },
   { name: "Capital Activity Tracker", description: "Monitors capital calls and distributions across funds, flags timing risks and reconciliation gaps.", status: "Active", todayCount: 3, confidence: "94%", lastRun: "42 min ago" },
   { name: "Investor Sentiment Monitor", description: "Analyzes LP communications and meeting transcripts to detect satisfaction shifts and concerns.", status: "Processing", todayCount: 2, confidence: "87%", lastRun: "Now" },
 ];
@@ -24,6 +24,9 @@ const agentStatusColors: Record<string, string> = {
   Idle: "bg-muted text-muted-foreground",
 };
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import AgentDetailView from "@/components/modules/AgentDetailView";
+import { investorCommsAgent } from "@/data/agentDetails";
 
 const statusBadges = [
   { label: "3 Agents Active", color: "bg-primary/10 text-primary border-primary/20" },
@@ -124,9 +127,14 @@ const priorityColors: Record<string, string> = {
 };
 
 const InvestorRelationsDashboard = () => {
+  const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long", day: "numeric", month: "long", year: "numeric",
   });
+
+  if (selectedAgent === "Investor Communications Agent") {
+    return <AgentDetailView config={investorCommsAgent} onBack={() => setSelectedAgent(null)} />;
+  }
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -172,7 +180,14 @@ const InvestorRelationsDashboard = () => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {agents.map((agent) => (
-            <Card key={agent.name} className="border border-border">
+            <Card
+              key={agent.name}
+              className={cn(
+                "border border-border transition-all",
+                agent.name === "Investor Communications Agent" && "cursor-pointer hover:border-primary/50 hover:shadow-md"
+              )}
+              onClick={() => agent.name === "Investor Communications Agent" && setSelectedAgent(agent.name)}
+            >
               <CardContent className="p-4 space-y-3">
                 <div className="flex items-start justify-between">
                   <h3 className="text-sm font-semibold text-foreground leading-tight">{agent.name}</h3>
