@@ -5,7 +5,9 @@ import { TrendingUp, TrendingDown, ArrowRight, AlertTriangle, CheckCircle, Clock
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import AgentDetailView from "@/components/modules/AgentDetailView";
+import NavMatchingScreen from "@/components/modules/NavMatchingScreen";
 import { navReconAgent } from "@/data/agentDetails";
+import { ArrowLeftRight } from "lucide-react";
 
 interface AgentCard {
   name: string;
@@ -122,7 +124,20 @@ const ControllerDashboard = () => {
   });
 
   if (selectedAgent === "NAV Reconciliation Agent") {
-    return <AgentDetailView config={navReconAgent} onBack={() => setSelectedAgent(null)} />;
+    return (
+      <AgentDetailView
+        config={navReconAgent}
+        onBack={() => setSelectedAgent(null)}
+        extraTabs={[
+          {
+            id: "matching",
+            label: "Matching Cockpit",
+            icon: <ArrowLeftRight className="h-3 w-3 mr-1.5" />,
+            content: <NavMatchingScreen />,
+          },
+        ]}
+      />
+    );
   }
 
   return (
