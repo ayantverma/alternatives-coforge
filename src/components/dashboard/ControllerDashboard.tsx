@@ -3,6 +3,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, TrendingDown, ArrowRight, AlertTriangle, CheckCircle, Clock, FileText, DollarSign, Receipt, Building2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import AgentDetailView from "@/components/modules/AgentDetailView";
+import { navReconAgent } from "@/data/agentDetails";
 
 interface AgentCard {
   name: string;
@@ -113,9 +116,14 @@ const severityColors: Record<string, string> = {
 };
 
 const ControllerDashboard = () => {
+  const [selectedAgent, setSelectedAgent] = useState<string | null>(null);
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long", day: "numeric", month: "long", year: "numeric",
   });
+
+  if (selectedAgent === "NAV Reconciliation Agent") {
+    return <AgentDetailView config={navReconAgent} onBack={() => setSelectedAgent(null)} />;
+  }
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -161,7 +169,14 @@ const ControllerDashboard = () => {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {agents.map((agent) => (
-            <Card key={agent.name} className="border border-border">
+            <Card
+              key={agent.name}
+              className={cn(
+                "border border-border transition-all",
+                agent.name === "NAV Reconciliation Agent" && "cursor-pointer hover:border-primary/50 hover:shadow-md"
+              )}
+              onClick={() => agent.name === "NAV Reconciliation Agent" && setSelectedAgent(agent.name)}
+            >
               <CardContent className="p-4 space-y-3">
                 <div className="flex items-start justify-between">
                   <h3 className="text-sm font-semibold text-foreground leading-tight">{agent.name}</h3>
