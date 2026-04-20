@@ -5,7 +5,9 @@ import { TrendingUp, TrendingDown, ArrowRight, AlertTriangle, CheckCircle, Clock
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import AgentDetailView from "@/components/modules/AgentDetailView";
+import NavMatchingScreen from "@/components/modules/NavMatchingScreen";
 import { navReconAgent } from "@/data/agentDetails";
+import { ArrowLeftRight } from "lucide-react";
 
 interface AgentCard {
   name: string;
