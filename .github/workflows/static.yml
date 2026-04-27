@@ -38,6 +38,8 @@ jobs:
       - name: Inject base into Vite config
         run: |
           sed -i 's/defineConfig((.*)=>({/defineConfig((mode)=>({ base: "\/alternatives-coforge\/",/' vite.config.*
+      - name: verify vite
+        run: cat vite.config.ts
       - name: Build React app
         run: npm run build
       - name: Upload artifact
