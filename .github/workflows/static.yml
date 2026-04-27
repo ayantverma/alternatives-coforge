@@ -35,6 +35,9 @@ jobs:
           
       - name: Install dependencies
         run: npm install
+      - name: Inject basename into BrowserRouter
+        run: |
+          sed -i 's|<BrowserRouter[^>]*>|<BrowserRouter basename="/alternatives-coforge/">|' src/App.tsx
       - name: Inject base into Vite config
         run: |
           sed -i 's|export default defineConfig(({ mode }) => ({|export default defineConfig(({ mode }) => ({\base: "/alternatives-coforge/",|' vite.config.ts
