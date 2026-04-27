@@ -35,8 +35,11 @@ jobs:
           
       - name: Install dependencies
         run: npm install
+      - name: Inject base into Vite config
+        run: |
+          sed -i 's/defineConfig((.*)=>({/defineConfig((mode)=>({ base: "\/alternatives-coforge\/",/' vite.config.*
       - name: Build React app
-        run: npm run build -- --base=/alternatives-coforge/
+        run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
