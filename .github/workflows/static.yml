@@ -37,7 +37,7 @@ jobs:
         run: npm install
       - name: Inject base into Vite config
         run: |
-          sed -i 's/defineConfig((.*)=>({/defineConfig((mode)=>({ base: "\/alternatives-coforge\/",/' vite.config.*
+          sed -i 's|export default defineConfig(({ mode }) => ({|export default defineConfig(({ mode }) => ({\base: "/alternatives-coforge/",|' vite.config.ts
       - name: verify vite
         run: cat vite.config.ts
       - name: Build React app
